@@ -94,7 +94,7 @@ docker-compose up -d
 
 Ini akan menginisialisasi kontainer database MySQL dengan detail sebagai berikut:
 - **Host**: `localhost`
-- **Port**: `3306`
+- **Port**: `3307`
 - **Database**: `library_db`
 - **Username**: `root`
 - **Password**: `root`

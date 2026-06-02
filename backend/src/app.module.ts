@@ -14,7 +14,7 @@ import { BorrowRecord } from './library/entities/borrow-record.entity';
     TypeOrmModule.forRoot({
       type: process.env.NODE_ENV === 'test' ? 'sqlite' : 'mysql',
       host: 'localhost',
-      port: 3306,
+      port: 3307,
       username: 'root',
       password: 'root',
       database: process.env.NODE_ENV === 'test' ? ':memory:' : 'library_db',
