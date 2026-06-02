@@ -1,32 +1,66 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
+import NavBar from './components/NavBar';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700', '800'] });
 
 export const metadata = {
-  title: 'Library Management System',
-  description: 'Public Catalog and Staff Dashboard',
+  title: 'LibraryOS – Sistem Manajemen Perpustakaan',
+  description: 'Katalog publik dan dashboard staf perpustakaan digital.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className} style={{ margin: 0, padding: 0, fontFamily: 'sans-serif', backgroundColor: '#f5f7fa', color: '#333' }}>
-        <header style={{ backgroundColor: '#2c3e50', color: 'white', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h1 style={{ margin: 0, fontSize: '1.5rem' }}>Avelina Library</h1>
-          <nav>
-            <Link href="/" style={{ color: 'white', textDecoration: 'none', marginRight: '1rem' }}>Catalog</Link>
-            <Link href="/staff" style={{ color: 'white', textDecoration: 'none' }}>Staff Dashboard</Link>
-          </nav>
+    <html lang="id">
+      <body className={inter.className}>
+        <header style={{
+          background: 'rgba(15,17,23,0.85)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          borderBottom: '1px solid var(--border)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+        }}>
+          <div style={{
+            maxWidth: '1300px',
+            margin: '0 auto',
+            padding: '0 24px',
+            height: '60px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+            {/* Logo */}
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '32px', height: '32px',
+                background: 'linear-gradient(135deg, #4f8ef7, #a78bfa)',
+                borderRadius: '8px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '16px',
+              }}>📚</div>
+              <span style={{ fontWeight: 700, fontSize: '17px', color: 'var(--text-primary)' }}>LibraryOS</span>
+            </Link>
+
+            {/* Client-side Nav with active state & hover */}
+            <NavBar />
+          </div>
         </header>
-        <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-          {children}
-        </main>
+
+        <main>{children}</main>
+
+        <footer style={{
+          borderTop: '1px solid var(--border)',
+          padding: '20px 24px',
+          textAlign: 'center',
+          fontSize: '13px',
+          color: 'var(--text-muted)',
+          marginTop: '60px',
+        }}>
+          LibraryOS · BNSP Project · {new Date().getFullYear()}
+        </footer>
       </body>
     </html>
   );

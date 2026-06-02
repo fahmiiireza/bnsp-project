@@ -13,7 +13,6 @@ export class Member implements IMember {
   @Column({ type: 'varchar', length: 255 })
   public name: string;
 
-  @Index({ unique: true })
   @Column({ type: 'varchar', length: 255, unique: true })
   public email: string;
 

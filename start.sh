@@ -77,9 +77,16 @@ cd backend
 npm run start:dev &
 BACKEND_PID=$!
 
-# Menjalankan frontend di background
+echo -e "${BLUE}⏳ Menunggu backend siap di port 3000...${NC}"
+# Tunggu hingga backend benar-benar listening di port 3000
+until lsof -i :3000 -sTCP:LISTEN > /dev/null 2>&1; do
+    sleep 1
+done
+echo -e "${GREEN}✅ Backend sudah berjalan di http://localhost:3000${NC}"
+
+# Menjalankan frontend di background dengan port yang sudah ditentukan (3001)
 cd ../frontend
-npm run dev &
+PORT=3001 npm run dev &
 FRONTEND_PID=$!
 
 # Fungsi untuk menangkap Ctrl+C dan mematikan kedua server secara rapi

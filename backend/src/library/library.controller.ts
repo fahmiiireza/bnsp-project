@@ -1,13 +1,44 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { LibraryService } from './library.service';
-import { ArrayUtils } from '../common/utils/array-utils';
 
 @Controller('library')
 export class LibraryController {
   constructor(private readonly libraryService: LibraryService) {}
 
   /**
-   * Endpoint to record a borrowed collection.
+   * GET /library/stats - Dashboard statistics.
+   */
+  @Get('stats')
+  async getStats() {
+    return this.libraryService.getStats();
+  }
+
+  /**
+   * GET /library/catalog - Public catalog of all books.
+   */
+  @Get('catalog')
+  async getCatalog() {
+    return this.libraryService.getAllBooks();
+  }
+
+  /**
+   * GET /library/members - List of all registered members.
+   */
+  @Get('members')
+  async getMembers() {
+    return this.libraryService.getAllMembers();
+  }
+
+  /**
+   * GET /library/borrow-records - All borrow records.
+   */
+  @Get('borrow-records')
+  async getBorrowRecords() {
+    return this.libraryService.getAllBorrowRecords();
+  }
+
+  /**
+   * POST /library/borrow - Record a new borrowing transaction.
    */
   @Post('borrow')
   async borrowItem(@Body('memberId') memberId: number, @Body('itemId') itemId: number) {
@@ -15,21 +46,10 @@ export class LibraryController {
   }
 
   /**
-   * Endpoint to get public catalog.
+   * POST /library/return/:recordId - Return a borrowed item.
    */
-  @Get('catalog')
-  async getCatalog() {
-    const books = await this.libraryService.getAllBooks();
-    // Use manual ArrayUtils to sort books by ID for demonstration
-    const ids = books.map(b => b.id);
-    const sortedIds = ArrayUtils.sortNumbers(ids, 'asc');
-    
-    // Sort the actual objects using the sorted IDs
-    const sortedBooks = sortedIds.map(id => {
-      const match = ArrayUtils.filterByProperty(books, 'id', id);
-      return match[0];
-    });
-
-    return sortedBooks;
+  @Post('return/:recordId')
+  async returnItem(@Param('recordId', ParseIntPipe) recordId: number) {
+    return this.libraryService.returnItem(recordId);
   }
 }
