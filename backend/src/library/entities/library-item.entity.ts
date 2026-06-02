@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, TableInheritance } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, TableInheritance, Index } from 'typeorm';
 import { ILibraryItem } from '../../common/interfaces';
 
 /**
@@ -11,6 +11,7 @@ export abstract class LibraryItem implements ILibraryItem {
   @PrimaryGeneratedColumn()
   public id: number;
 
+  @Index()
   @Column({ type: 'varchar', length: 255 })
   public title: string;
 
