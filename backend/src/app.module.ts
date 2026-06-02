@@ -12,12 +12,12 @@ import { BorrowRecord } from './library/entities/borrow-record.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: process.env.NODE_ENV === 'test' ? 'sqlite' : 'mysql',
       host: 'localhost',
       port: 3306,
       username: 'root',
       password: 'root',
-      database: 'library_db',
+      database: process.env.NODE_ENV === 'test' ? ':memory:' : 'library_db',
       entities: [LibraryItem, Book, Member, BorrowRecord],
       synchronize: true, // Use only in development
     }),
